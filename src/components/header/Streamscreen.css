@@ -1,0 +1,28 @@
+.main_heading{
+    color: gray;
+    
+}
+.video_container {
+    position: relative;
+  }
+  
+  .screen_video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  
+  .camera_video {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    height: 150px;
+    z-index: 2;
+  }
+  .buttons{
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+  }

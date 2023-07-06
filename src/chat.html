@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>IVS Chat DEMO</title>
+
+
+
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", () => {
+
+        const token = prompt("Token : ");
+
+        const chatEndpoint = "wss://edge.ivschat.ap-south-1.amazonaws.com";
+
+        ///init ws connection
+
+         const connection = new WebSocket(chatEndpoint, token);
+
+
+
+ 
+        //listen for message
+
+        connection.addEventListener("message", (evt) => {
+
+          console.log(evt);
+
+          const msg=JSON.parse(evt.data)
+
+          console.log(msg);
+          console.log(msg.Sender.Attributes.uname,"+++++++++++++");
+
+          const chatContainer=document.getElementById('chat');
+
+          chatContainer.innerHTML +=`<div><b>${msg.Sender.Attributes.name}</b>:${msg.Content}</div>`
+
+        });
+
+
+
+
+        //send the message onclick button
+
+
+
+
+        document.getElementById("send-btn").addEventListener("click", () => {
+
+          const chatMsgEL = document.getElementById("chat-msg");
+
+          const message = chatMsgEL.value;
+
+
+
+
+          const payload = {
+
+            Action: "SEND_MESSAGE",
+
+            Content: message,
+
+          };
+
+
+
+
+          connection.send(JSON.stringify(payload));
+
+        });
+
+      });
+
+    </script>
+
+  </head>
+
+ 
+
+  <body>
+
+    <style>
+
+    #chat{
+
+        border: solid 1px;
+
+        width: 300px;
+
+        height: 300px;
+
+    }
+
+    </style>
+
+    <h6>IVS chat DEMO</h6>
+
+    <div id="chat"></div>
+
+    <input type="text" id="chat-msg" />
+
+    <button type="button" id="send-btn">send</button>
+
+  </body>
+
+</html>
